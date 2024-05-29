@@ -5,3 +5,8 @@ char getNewInput(char c, char oldChar) {
   }
   return "";
 }
+
+
+bool isDigit(char c) {
+  return c >= '0' && c <= '9';
+}

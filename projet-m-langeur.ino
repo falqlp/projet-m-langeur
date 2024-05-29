@@ -64,7 +64,6 @@ void setup() {
 void loop() {
   char input = getNewInput(keypad.getKey(), oldChar);
   if(input){
-    Serial.println(input);
     if(editMode){
       handleEditModeInput(input);
     }else{
@@ -82,19 +81,19 @@ void updateDisplay() {
 void handleNotEditModeInput(char key) {
     switch (key) {
       case 'A':
-        launchProg(prog[0]);
+        launchProg(prog[0], redPump, greenPump, bluePump);
         break;
       case 'B':
-        launchProg(prog[1]);
+        launchProg(prog[1],  redPump,  greenPump,  bluePump);
         break;
       case 'C':
-        launchProg(prog[2]);
+        launchProg(prog[2],  redPump,  greenPump,  bluePump);
         break;
       case 'D':
-        launchProg(prog[3]);
+        launchProg(prog[3],  redPump,  greenPump,  bluePump);
         break;
       case 'E':
-        launchProg(prog[4]);
+        launchProg(prog[4],  redPump,  greenPump,  bluePump);
         break;
       case 'F':
         editMode = true;
@@ -103,44 +102,6 @@ void handleNotEditModeInput(char key) {
         Serial.println(key);
         break;
     }
-}
-
-void launchProg(int program[3]) {
-  double R, G, B;
-  // Lire les valeurs de R, G et B à partir de l'EEPROM
-  R = EEPROM.read(program[0]);
-  G = EEPROM.read(program[1]);
-  B = EEPROM.read(program[2]);
-
-  double total = R + G + B;
-
-  if (total > 0) { // Vérifier que le total n'est pas zéro pour éviter une division par zéro
-    Serial.println("Open Red");
-    turnOnMotor(redPump);
-    if (R > 0) {
-      delay(R * 10000/total); // Délai proportionnel à la valeur de R
-    }
-    turnOffMotor(redPump);
-    Serial.println("Close Red");
-
-    Serial.println("Open Green");
-    turnOnMotor(greenPump);
-    if (G > 0) {
-      delay(G * 10000/total); // Délai proportionnel à la valeur de G
-    }
-    turnOffMotor(greenPump);
-    Serial.println("Close Green");
-
-    Serial.println("Open Blue");
-    turnOnMotor(bluePump);
-    if (B > 0) {
-      delay(B * 10000/total); // Délai proportionnel à la valeur de B
-    }
-    turnOffMotor(bluePump);
-    Serial.println("Close Green");
-  } else {
-    Serial.println("Total des valeurs est zéro, aucun délai appliqué.");
-  }
 }
 
 void handleEditModeInput(char key) {
@@ -171,7 +132,6 @@ void editProgram(int program[3]){
   String values = getValues();
   Serial.println(program[0]);
   for (int i = 0; i < 3; i++) {
-    Serial.println(values.substring(i * 2, (i * 2) + 2).toInt());
     EEPROM.put(program[i], values.substring(i * 2, (i * 2) + 2).toInt());
   }
   updateDisplay();
@@ -193,8 +153,4 @@ String getValues() {
     delay(50);
   }
   return values;
-}
-
-bool isDigit(char c) {
-  return c >= '0' && c <= '9';
 }

@@ -1,2 +1,2 @@
-String appendCharToString(String str, char c);
-String resetString();
+char getNewInput(char c, char oldChar);
+bool isDigit(char c);
