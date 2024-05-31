@@ -19,7 +19,7 @@ void launchProg(int program[3], Adafruit_DCMotor *redPump, Adafruit_DCMotor *gre
         Serial.println("Open Red");
         turnOnMotor(redPump);
         if (R > 0) {
-            delay(R * 10000 / total);
+            delay(R * flowValue / total);
         }
         turnOffMotor(redPump);
         Serial.println("Close Red");
@@ -27,7 +27,7 @@ void launchProg(int program[3], Adafruit_DCMotor *redPump, Adafruit_DCMotor *gre
         Serial.println("Open Green");
         turnOnMotor(greenPump);
         if (G > 0) {
-            delay(G * 10000 / total);
+            delay(G * flowValue / total);
         }
         turnOffMotor(greenPump);
         Serial.println("Close Green");
@@ -35,7 +35,7 @@ void launchProg(int program[3], Adafruit_DCMotor *redPump, Adafruit_DCMotor *gre
         Serial.println("Open Blue");
         turnOnMotor(bluePump);
         if (B > 0) {
-            delay(B * 10000 / total);
+            delay(B * flowValue / total);
         }
         turnOffMotor(bluePump);
         Serial.println("Close Blue");

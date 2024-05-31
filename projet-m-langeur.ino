@@ -16,6 +16,7 @@
 #define D5 5
 #define D6 6
 #define D7 7
+#define flowValue 10000
 
 LiquidCrystal_74HC595 lcd(DS, SHCP, STCP, RS, E, D4, D5, D6, D7);
 
@@ -49,8 +50,6 @@ byte colPins[COLS] = {9, 8, 7, 6};
 Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
 char oldChar = "";
 boolean editMode = false;
-
-
  
 void setup() {
   Serial.begin(9600);
